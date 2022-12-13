@@ -43,13 +43,13 @@ fn level_2(input: &str) {
 
 fn display(i: &mut i32, range: Range<i32>) {
     *i = (*i % 40) + 1;
-    if i == &1 {
-        println!()
-    }
     if range.contains(i) {
         print!("█");
     } else {
         print!(".");
+    }
+    if i == &40 {
+        println!()
     }
 }
 
@@ -58,7 +58,7 @@ fn main() {
     let input = fs::read_to_string("src/day10/input.in").expect("file not found");
 
     println!("level_1: {}", level_1(&input));
-    print!("level_2 :");
+    println!("level_2 :");
     level_2(&input);
 
     println!("time: {:?}", now.elapsed());
