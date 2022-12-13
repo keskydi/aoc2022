@@ -38,7 +38,6 @@ fn level_2(input: &str) {
             l_value += l.split_once(" ").unwrap().1.parse::<i32>().unwrap();
         }
     }
-    println!()
 }
 
 fn display(i: &mut i32, range: Range<i32>) {
