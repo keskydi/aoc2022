@@ -43,13 +43,12 @@ fn level_2(input: &[u8]) -> usize {
             let next = if fwd { pos + dpos } else { pos - dpos };
 
             if (0..input.len()).any(|v| v == next as usize) && next % (n + 1) != n {
+                let c = if input[pos as usize] == b'E' { b'z'+1 } else { input[pos as usize] };
                 if input[next as usize] == b'a' && input[pos as usize] == b'b' {
                     return steps + 1;
-                } else if (input[next as usize] >= input[pos as usize] - 1
-                    && input[pos as usize] != b'E'
+                } else if input[next as usize] >= c - 1
                     && !vst.contains(&next)
-                    && input[next as usize] >= b'a') || (input[next as usize] == b'z'
-                        && input[pos as usize] == b'E')
+                    && input[next as usize] >= b'a'
                 {
                     vst.insert(next);
                     queue.push_back((next, steps + 1));
