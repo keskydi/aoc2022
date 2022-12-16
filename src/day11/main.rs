@@ -1,15 +1,4 @@
-#![allow(warnings)]
-
 use std::fs;
-
-struct Monkeys {
-    monkeys: Vec<(fn(u64) -> (), Vec<u64>)>,
-}
-
-fn t() {
-    let size = 8;
-    let items: Vec<Vec<u64>> = Vec::with_capacity(size);
-}
 
 enum Op {
     Add(u64),
@@ -28,7 +17,6 @@ impl Op {
 }
 
 fn level_1(input: &str) -> u64 {
-// fn level_1(input: &str, count: u64) -> u64 {
     let mut items: Vec<Vec<u64>> = vec![];
     let mut stress: Vec<u64> = vec![];
 
@@ -43,18 +31,14 @@ fn level_1(input: &str) -> u64 {
         .collect();
 
     let mut iter = std::iter::from_fn(move || {
-
-        // let mut nxt: Vec<Vec<u64>> = vec![vec![];items.len()];
-
-        for (idx,(op,div,t,f)) in monkeys.iter().enumerate() {
-
-            while let Some(mut item) = items.get_mut(idx).unwrap().pop(){
+        for (idx, (op, div, t, f)) in monkeys.iter().enumerate() {
+            while let Some(mut item) = items.get_mut(idx).unwrap().pop() {
                 *stress.get_mut(idx).unwrap() += 1;
                 item = op.operate(item).div_euclid(3);
 
                 if item % div == 0 {
                     items.get_mut(*t as usize).unwrap().push(item);
-                }else{
+                } else {
                     items.get_mut(*f as usize).unwrap().push(item);
                 }
             }
@@ -67,63 +51,53 @@ fn level_1(input: &str) -> u64 {
     lv_1.sort();
     lv_1.reverse();
 
-
-
-    lv_1[0]*lv_1[1]
+    lv_1[0] * lv_1[1]
 }
 
 fn level_2(input: &str) -> u128 {
-    // fn level_1(input: &str, count: u64) -> u64 {
-        let mut items: Vec<Vec<u64>> = vec![];
-        let mut stress: Vec<u128> = vec![];
+    let mut items: Vec<Vec<u64>> = vec![];
+    let mut stress: Vec<u128> = vec![];
 
-        let mut lcm = 1;
-    
-        let monkeys: Vec<(Op, u64, u64, u64)> = input
-            .split("\n\n")
-            .map(|s| {
-                let (m, v) = parse_monkey(s);
-                items.push(v);
-                stress.push(0);
-                lcm *= m.1;
-                m
-            })
-            .collect();
-    
-        dbg!(lcm);
-        let mut iter = std::iter::from_fn(move || {
-    
-            // let mut nxt: Vec<Vec<u64>> = vec![vec![];items.len()];
-    
-            for (idx,(op,div,t,f)) in monkeys.iter().enumerate() {
-    
-                while let Some(mut item) = items.get_mut(idx).unwrap().pop(){
-                    *stress.get_mut(idx).unwrap() += 1;
-                    item = op.operate(item) % lcm;
-    
-                    if item % div == 0 {
-                        items.get_mut(*t as usize).unwrap().push(item);
-                    }else{
-                        items.get_mut(*f as usize).unwrap().push(item);
-                    }
+    let mut lcm = 1;
+
+    let monkeys: Vec<(Op, u64, u64, u64)> = input
+        .split("\n\n")
+        .map(|s| {
+            let (m, v) = parse_monkey(s);
+            items.push(v);
+            stress.push(0);
+            lcm *= m.1;
+            m
+        })
+        .collect();
+
+    dbg!(lcm);
+    let mut iter = std::iter::from_fn(move || {
+        for (idx, (op, div, t, f)) in monkeys.iter().enumerate() {
+            while let Some(mut item) = items.get_mut(idx).unwrap().pop() {
+                *stress.get_mut(idx).unwrap() += 1;
+                item = op.operate(item) % lcm;
+
+                if item % div == 0 {
+                    items.get_mut(*t as usize).unwrap().push(item);
+                } else {
+                    items.get_mut(*f as usize).unwrap().push(item);
                 }
             }
-    
-            Some(stress.clone())
-        });
-    
-        let mut lv_1 = iter.nth(9999).unwrap();
-        lv_1.sort();
-        lv_1.reverse();
-    
-    
-    
-        lv_1[0]*lv_1[1]
-    }
+        }
+
+        Some(stress.clone())
+    });
+
+    let mut lv_1 = iter.nth(9999).unwrap();
+    lv_1.sort();
+    lv_1.reverse();
+
+    lv_1[0] * lv_1[1]
+}
 
 fn parse_monkey(s: &str) -> ((Op, u64, u64, u64), Vec<u64>) {
     let mut inst = s.lines().skip(1);
-    // inst.skip(1);
     let (Some(items),Some(op),Some(test),Some(t_target),Some(f_target)) = (inst.next(),inst.next(),inst.next(),inst.next(), inst.next()) else {
         panic!("Can't parse monkey: '{s}'");
     };
@@ -139,11 +113,10 @@ fn parse_monkey(s: &str) -> ((Op, u64, u64, u64), Vec<u64>) {
         Op::Square
     };
 
-    let items: Vec<u64> = items[17..].trim()
+    let items: Vec<u64> = items[17..]
+        .trim()
         .split(",")
-        .map(|x| {
-            x.trim().parse::<u64>().unwrap()
-        })
+        .map(|x| x.trim().parse::<u64>().unwrap())
         .collect();
 
     (
@@ -160,7 +133,6 @@ fn parse_monkey(s: &str) -> ((Op, u64, u64, u64), Vec<u64>) {
 fn main() {
     let now = std::time::Instant::now();
     let input = fs::read_to_string("src/day11/input.in").expect("file not found");
-
 
     println!("level_1: {}", level_1(&input));
     println!("level_2: {}", level_2(&input));
