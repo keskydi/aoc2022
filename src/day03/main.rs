@@ -25,13 +25,14 @@ fn parse_letter(c_value: char) -> isize {
     }
 }
 
-fn level_2(input: &str) ->isize{
+fn level_2(input: &str) -> isize {
     let lines_1 = input.lines().step_by(3);
     let lines_2 = input.lines().skip(1).step_by(3);
     let lines_3 = input.lines().skip(2).step_by(3);
 
-    lines_1.zip(lines_2.zip(lines_3))
-        .filter_map(|(a,(b,c))| {
+    lines_1
+        .zip(lines_2.zip(lines_3))
+        .filter_map(|(a, (b, c))| {
             for char in a.chars() {
                 if b.contains(char) && c.contains(char) {
                     return Some(parse_letter(char));

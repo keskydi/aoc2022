@@ -41,10 +41,7 @@ fn level_1(input: &str) -> T {
 
 use std::array;
 
-
 fn level_2(input: &str) -> T {
-
-
     let array_size: usize = input.lines().into_iter().next().unwrap().len();
 
     let table = input.replace(&['\r', '\n'], "");

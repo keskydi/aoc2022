@@ -1,13 +1,18 @@
-use std::fs::File;
-use std::io::{BufRead, BufReader};
+#![allow(unused)]
+use std::cmp::Ordering;
 
 fn main() {
-    
-    let iter = vec![1,2,3,4,5,6,7,8,9,10];
+    let r = vec![2, 3, 4];
+    let l = vec![4];
+    assert_eq!(r.cmp(&l), Ordering::Less);
 
-    dbg!(iter[0..0].iter().step_by(3).collect::<Vec<_>>());
-    dbg!(iter[0..8].iter().rev().step_by(3).collect::<Vec<_>>());
-    dbg!(iter[0..8].iter().step_by(3).rev().collect::<Vec<_>>());
-    dbg!(iter[0..8].iter().rev().collect::<Vec<_>>());
+    assert_eq!(3.cmp(&5), Ordering::Less);
 
+    let r = vec![7, 7, 7, 7];
+    let l = vec![7, 7, 7];
+    assert_ne!(r.cmp(&l), Ordering::Less);
+
+    let r = vec![5, 6, 7];
+    let l = vec![5, 6, 0];
+    assert_ne!(r.cmp(&l), Ordering::Less);
 }

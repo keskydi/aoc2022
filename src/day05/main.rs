@@ -1,4 +1,4 @@
-use std::{fs};
+use std::fs;
 
 fn level_1(input: &str) -> String {
     let (stack, moves) = input.split_once("\n\n").unwrap();
@@ -17,27 +17,34 @@ fn level_1(input: &str) -> String {
         }
     });
 
-    
     let moves = moves.lines().map(|mv| {
         let mut c_moves = mv.splitn(6, ' ').skip(1).step_by(2);
 
         let (Some(nb),Some(start),Some(end)) = (c_moves.next(),c_moves.next(),c_moves.next()) else{
             panic!("Can't parse move: '{mv}'");
         };
-        (nb.parse::<usize>().unwrap(), start.parse::<usize>().unwrap(), end.parse::<usize>().unwrap())
+        (
+            nb.parse::<usize>().unwrap(),
+            start.parse::<usize>().unwrap(),
+            end.parse::<usize>().unwrap(),
+        )
     });
 
-    moves.for_each(|(nb,start,end)|{
-        for _ in 0..nb{
-            let value = c_stack.get_mut(start-1).unwrap().pop().unwrap();
-            c_stack.get_mut(end-1).unwrap().push(value);
+    moves.for_each(|(nb, start, end)| {
+        for _ in 0..nb {
+            let value = c_stack.get_mut(start - 1).unwrap().pop().unwrap();
+            c_stack.get_mut(end - 1).unwrap().push(value);
         }
     });
 
-    c_stack.iter().map(|s| {
-        let c = s.last().unwrap().to_owned();
-        c.to_string()
-    }).collect::<Vec<String>>().join("")
+    c_stack
+        .iter()
+        .map(|s| {
+            let c = s.last().unwrap().to_owned();
+            c.to_string()
+        })
+        .collect::<Vec<String>>()
+        .join("")
 }
 
 fn level_2(input: &str) -> String {
@@ -56,36 +63,43 @@ fn level_2(input: &str) -> String {
             }
         }
     });
-    
+
     let moves = moves.lines().map(|mv| {
         let mut c_moves = mv.splitn(6, ' ').skip(1).step_by(2);
 
         let (Some(nb),Some(start),Some(end)) = (c_moves.next(),c_moves.next(),c_moves.next()) else{
             panic!("Can't parse move: '{mv}'");
         };
-        (nb.parse::<usize>().unwrap(), start.parse::<usize>().unwrap(), end.parse::<usize>().unwrap())
+        (
+            nb.parse::<usize>().unwrap(),
+            start.parse::<usize>().unwrap(),
+            end.parse::<usize>().unwrap(),
+        )
     });
 
-    moves.for_each(|(nb,start,end)|{
+    moves.for_each(|(nb, start, end)| {
         let mut list = vec![];
-        for _ in 0..nb{
-            let value = c_stack.get_mut(start-1).unwrap().pop().unwrap();
+        for _ in 0..nb {
+            let value = c_stack.get_mut(start - 1).unwrap().pop().unwrap();
             list.push(value)
         }
-        list.iter().rev().for_each(|&value|{
-            c_stack.get_mut(end-1).unwrap().push(value)
-        })
+        list.iter()
+            .rev()
+            .for_each(|&value| c_stack.get_mut(end - 1).unwrap().push(value))
     });
 
-    c_stack.iter().map(|s| {
-        let c = s.last().unwrap().to_owned();
-        c.to_string()
-    }).collect::<Vec<String>>().join("")
+    c_stack
+        .iter()
+        .map(|s| {
+            let c = s.last().unwrap().to_owned();
+            c.to_string()
+        })
+        .collect::<Vec<String>>()
+        .join("")
 }
 
-
 #[test]
-fn test_level_1(){
+fn test_level_1() {
     let input = "    [D]    
 [N] [C]    
 [Z] [M] [P]
@@ -94,13 +108,13 @@ fn test_level_1(){
 move 1 from 2 to 1
 move 3 from 1 to 3
 move 2 from 2 to 1
-move 1 from 1 to 2"; 
+move 1 from 1 to 2";
 
-    assert_eq!("CMZ",level_1(input))
+    assert_eq!("CMZ", level_1(input))
 }
 
 #[test]
-fn test_level_2(){
+fn test_level_2() {
     let input = "    [D]    
 [N] [C]    
 [Z] [M] [P]
@@ -109,9 +123,9 @@ fn test_level_2(){
 move 1 from 2 to 1
 move 3 from 1 to 3
 move 2 from 2 to 1
-move 1 from 1 to 2"; 
+move 1 from 1 to 2";
 
-    assert_eq!("MCD",level_2(input))
+    assert_eq!("MCD", level_2(input))
 }
 
 fn main() {
