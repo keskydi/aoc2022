@@ -1,6 +1,6 @@
 use nom::{
-    branch::alt, bytes::complete::tag, character::complete, error::ParseError,
-    multi::separated_list0, sequence::delimited, Err, IResult, Parser,
+    branch::alt, bytes::complete::tag, character::complete, multi::separated_list0,
+    sequence::delimited, IResult, Parser,
 };
 use std::{cmp::Ordering, fs};
 
@@ -36,7 +36,6 @@ impl PartialEq for Element {
             (Self::Array(l0), Self::Array(r0)) => l0 == r0,
             (Self::Array(l0), Self::Number(r0)) => l0 == &vec![Self::Number(*r0)],
             (Self::Number(l0), Self::Array(r0)) => &vec![Self::Number(*l0)] == r0,
-            _ => false,
         }
     }
 }
@@ -67,8 +66,7 @@ fn level_1(input: &str) -> R {
 fn level_2(input: &str) -> R {
     let mut list: Vec<Element> = input
         .split("\n\n")
-        .enumerate()
-        .map(|(index, c)| {
+        .map(|c| {
             let mut lines = c.lines();
             let (Some(a),Some(b)) =  ((lines.next()),lines.next()) else{
                 panic!("error parsing")
