@@ -77,7 +77,7 @@ fn test_cheat() {
 
 fn main() {
     let now = std::time::Instant::now();
-    let input = fs::read_to_string("src/day02/input.in").expect("file not found");
+    let input = fs::read_to_string("src/bin/day02/input.in").expect("file not found");
 
     level_1(&input);
     level_2(&input);

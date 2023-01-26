@@ -213,7 +213,7 @@ fn parse_input(input: &str) -> IResult<&str, Vec<(Point, Point)>> {
 
 fn main() {
     let now = std::time::Instant::now();
-    let input = fs::read_to_string("src/day15/input.in").expect("file not found");
+    let input = fs::read_to_string("src/bin/day15/input.in").expect("file not found");
 
     println!("level_1: {}", level_1(&input,2000000));
     println!("level_2: {}", level_2(&input));

@@ -34,7 +34,7 @@ fn level_2(input: &str) -> isize {
 
 fn main() {
     let now = std::time::Instant::now();
-    let input = fs::read_to_string("src/day04/input.in").expect("file not found");
+    let input = fs::read_to_string("src/bin/day04/input.in").expect("file not found");
 
     println!("level_1: {}", level_1(&input));
     println!("level_2: {}", level_2(&input));

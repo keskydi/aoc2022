@@ -32,7 +32,7 @@ fn level_2(input: &str) {
 
 fn main() {
     let now = std::time::Instant::now();
-    let input = fs::read_to_string("src/day01/input.in").expect("file not found");
+    let input = fs::read_to_string("src/bin/day01/input.in").expect("file not found");
 
     level_1(&input);
     level_2(&input);

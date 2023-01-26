@@ -45,7 +45,7 @@ fn follow(input: &str, lenght: usize) -> usize {
 
 fn main() {
     let now = std::time::Instant::now();
-    let input = fs::read_to_string("src/day09/input.in").expect("file not found");
+    let input = fs::read_to_string("src/bin/day09/input.in").expect("file not found");
 
     println!("level_1: {}", follow(&input, 2));
     println!("level_2: {}", follow(&input, 10));
